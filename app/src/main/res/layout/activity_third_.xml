@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.berni.onclick.Third_Activity">
+
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ib_web"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="@dimen/padding"
+        android:text="phone" />
+
+    <ImageButton
+        android:id="@+id/ib_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/et_phone"
+        android:layout_marginBottom="11dp"
+        android:layout_toEndOf="@+id/et_phone"
+        android:background="@android:color/transparent"
+        app:srcCompat="@android:drawable/ic_menu_call" />
+
+    <EditText
+        android:id="@+id/et_web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_send"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="139dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <ImageButton
+        android:id="@+id/ib_web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignTop="@+id/et_web"
+        android:layout_toEndOf="@+id/et_web"
+        android:background="@android:color/transparent"
+        app:srcCompat="@android:drawable/ic_media_previous" />
+
+    <ImageButton
+        android:id="@+id/btn_send"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/alto"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_centerHorizontal="true"
+        android:src="@android:drawable/ic_menu_camera" />
+</RelativeLayout>
