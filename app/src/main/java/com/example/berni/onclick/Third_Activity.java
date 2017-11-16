@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,14 +27,48 @@ public class Third_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_third_);
         casting();
 
-      ib_phone.setOnClickListener(new View.OnClickListener() {
+        ib_phone.setOnClickListener(new View.OnClickListener() {
 
-          @Override
-          public void onClick(View v) {
-              String telephone = et_phone.getText().toString();
-              if (!telephone.isEmpty()){
-                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                      requestPermissions(new String[]{Manifest.permission.CALL_PHONE},100);
+            @Override
+            public void onClick(View v) {
+                String telephone = et_phone.getText().toString();
+                if (!telephone.isEmpty()) {
+                    //Comprobar version actual que estamos corriendo
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        //Comprobar si ha aceptado, no ha aceptado o nunca se le ha preguntado
+                        if (checkPermision(Manifest.permission.CALL_PHONE)) {
+                            // ha aceptado
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + telephone));
+                            if (ActivityCompat.checkSelfPermission(Third_Activity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                // TODO: Consider calling
+                                //    ActivityCompat#requestPermissions
+                                // here to request the missing permissions, and then overriding
+                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                //                                          int[] grantResults)
+                                // to handle the case where the user grants the permission. See the documentation
+                                // for ActivityCompat#requestPermissions for more details.
+                                return;
+                            }
+                            startActivity(intent);
+                      }else {
+
+                           if (!shouldShowRequestPermissionRationale(Manifest.permission.CALL_PHONE)){
+                               // Si no se le ha preguntado aun
+                               requestPermissions(new String[]{Manifest.permission.CALL_PHONE},100);
+                           }else {
+                                // si se ha denegado
+                               message("Activa los permisos");
+                               Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                               i.addCategory(Intent.CATEGORY_DEFAULT);
+                               i.setData(Uri.parse("package:"+getPackageName()));
+                               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                               i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                               i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                               startActivity(i);
+                           }
+                        }
+
+
                   }else {
                       olderVersion(telephone);
                   }
@@ -43,7 +79,7 @@ public class Third_Activity extends AppCompatActivity {
 
           @SuppressLint("MissingPermission")
           private void olderVersion(String number){
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+number));
             if (checkPermision(Manifest.permission.CALL_PHONE)){
                 startActivity(intent);
             }else {
