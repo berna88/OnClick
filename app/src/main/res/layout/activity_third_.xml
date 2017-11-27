@@ -17,8 +17,7 @@
         android:layout_marginBottom="36dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:padding="@dimen/padding"
-        android:text="phone" />
+        android:padding="@dimen/padding" />
 
     <ImageButton
         android:id="@+id/ib_phone"
@@ -45,7 +44,6 @@
         android:id="@+id/ib_web"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_alignTop="@+id/et_web"
         android:layout_toEndOf="@+id/et_web"
         android:background="@android:color/transparent"

@@ -26,6 +26,36 @@ public class Third_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_);
         casting();
+        ib_web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = et_web.getText().toString();
+                String mail = "berna_halo@hotmail.com";
+                if (!url.isEmpty() && !url.equals(null)) {
+                    Intent intent = new Intent( );
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("http://"+url));
+                    //Contactos
+                    Intent i_contacts = new Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people"));
+                    //email
+                    Intent i_mail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto"+mail));
+                    //email completo
+                    Intent i_mail_complete = new Intent(Intent.ACTION_VIEW, Uri.parse(mail));
+                    i_mail_complete.setType("plain/text");
+                    i_mail_complete.putExtra(Intent.EXTRA_SUBJECT,"Titulo");
+                    i_mail_complete.putExtra(Intent.EXTRA_TEXT,"Parrafo");
+                    i_mail_complete.putExtra(Intent.EXTRA_EMAIL, new String[]{"berna_halo@hotmail.com"});
+                    // Telefono 2
+
+                    Intent i_tel = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:58702575"));
+
+                    startActivity(i_mail_complete);
+
+                }else {
+                    message("No tiene valor");
+                }
+            }
+        });
 
         ib_phone.setOnClickListener(new View.OnClickListener() {
 
