@@ -2,6 +2,7 @@ package com.example.berni.onclick;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,7 +19,8 @@ import android.widget.Toast;
 
 public class Third_Activity extends AppCompatActivity {
     EditText et_phone, et_web;
-    ImageButton ib_phone, ib_web;
+    ImageButton ib_phone, ib_web, ib_send;
+    public static final int CAMERA_SAVE = 20;
 
 
     @Override
@@ -40,16 +42,19 @@ public class Third_Activity extends AppCompatActivity {
                     //email
                     Intent i_mail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto"+mail));
                     //email completo
-                    Intent i_mail_complete = new Intent(Intent.ACTION_VIEW, Uri.parse(mail));
+                    Intent i_mail_complete = new Intent(Intent.ACTION_SEND, Uri.parse(mail));
                     i_mail_complete.setType("plain/text");
                     i_mail_complete.putExtra(Intent.EXTRA_SUBJECT,"Titulo");
                     i_mail_complete.putExtra(Intent.EXTRA_TEXT,"Parrafo");
                     i_mail_complete.putExtra(Intent.EXTRA_EMAIL, new String[]{"berna_halo@hotmail.com"});
                     // Telefono 2
-
                     Intent i_tel = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:58702575"));
+                    // Abrir Camara
 
-                    startActivity(i_mail_complete);
+
+
+                    startActivity(Intent.createChooser(i_mail_complete,"Elige cliente de correo"));
+                    //startActivity(i_mail_complete);
 
                 }else {
                     message("No tiene valor");
@@ -119,15 +124,45 @@ public class Third_Activity extends AppCompatActivity {
 
       });
 
+        ib_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                startActivityForResult(intent, CAMERA_SAVE);
+            }
+        });
+
 
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode){
+            case CAMERA_SAVE:
+                if (requestCode== Activity.RESULT_OK){
+                    String result = data.toUri(0);
+                    message("result"+ result);
+                }else {
+                    message("error");
+                }
+
+                break;
+
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
+
     public void casting(){
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_web = (EditText) findViewById(R.id.et_web);
         ib_phone = (ImageButton) findViewById(R.id.ib_phone);
         ib_web = (ImageButton) findViewById(R.id.ib_web);
+        ib_send = (ImageButton) findViewById(R.id.btn_send);
     }
 
 
