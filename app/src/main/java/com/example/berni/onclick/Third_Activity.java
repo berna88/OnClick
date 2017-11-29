@@ -27,6 +27,11 @@ public class Third_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_);
+        // con este muestra la muestra para retroceder despues se configura en el manifest parentActivityName
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // R = resursos mipmap ests en res
+        getSupportActionBar().setIcon(R.mipmap.ic_myicon);
         casting();
         ib_web.setOnClickListener(new View.OnClickListener() {
             @Override
